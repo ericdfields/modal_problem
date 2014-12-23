@@ -17,18 +17,6 @@ var paths = {
 
 var dest = 'build/'
 
-// gulp.task('scripts', bundle); // so you can run `gulp js` to build the file
-// bundler.on('update', bundle); // on any dep update, runs the bundler
-
-// function bundle() {
-//   return bundler.bundle()
-//     // log errors if they happen
-//     .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-//     .pipe(source('index.js'))
-//       .pipe(buffer())
-//     .pipe(gulp.dest(dest));
-// }
-
 gulp.task('styles', function () {
   gulp.src(paths.styles)
     .pipe(sass())
@@ -69,6 +57,14 @@ gulp.task('serve', function() {
 });
 
 gulp.task('build', ['scripts', 'styles', 'markup']);
+
+gulp.task('build_essentials', function(){
+  gulp.src('./src/overlay.js')
+    .pipe(gulp.dest(dest))
+  gulp.src('./src/overlay.scss')
+    .pipe(sass())
+    .pipe(gulp.dest(dest))
+})
 
 // The default task (called when you run `gulp` from cli)
 gulp.task('default', ['watch', 'scripts', 'styles', 'markup', 'serve']);

@@ -1,3 +1,8 @@
+echo ' '
+echo '===> Doing work 🔨'
+echo ' '
 npm install
-gulp build
-open build/index.html
+gulp build_essentials
+echo ' '
+echo '===> Find the goods in ./build 😎'
+echo ' '

@@ -1,18 +1,34 @@
 var Modal = (function() {
-    var _this,config,overlay,modal;
+    var config,overlay,modal;
 
     // constructor
-    function Modal(options){
+    function Modal(content,options){
       _this = this;
+      var options = options || {};
       // update config w/ passed thru options
       for (var attrname in options) { config[attrname] = options[attrname]; }      
       setupOverlay();
+      if (content) {
+        _this.appendContent(content);
+      }
+
+      window.addEventListener('resize',function(){
+        _this.setLeft();
+        _this.setTop();
+      })
+      overlay.addEventListener('click',function(event){
+        if (event.target.classList.contains('e-modal-close') || (options.screenClickCloses && event.target.classList.contains('e-screen')) || (options.contentClickCloses && event.target.classList.contains('e-modal'))) {
+          _this.remove()
+        }
+      });
     };
 
     config = {
       customClassName: undefined,
       width: '50%',
-      height: '50%'
+      height: '50%',
+      screenClickCloses: false,
+      contentClickCloses: false,
     }
 
     // create our container div
@@ -66,10 +82,48 @@ var Modal = (function() {
       _this.modal.style.top = (window.innerHeight - _this.getHeight()) / 2 + 'px'
     };
 
-    window.addEventListener('resize',function(){
-      _this.setLeft()
-      _this.setTop()
-    },false)
+    Modal.prototype.appendContent = function(content) {
+      var content_container = _this.modal.querySelector('.e-modal-content');
+      content_container.innerHTML = '';
+      if (typeof content == 'string') {
+        var img = document.createElement('div');
+        // img.src = content;
+        img.innerHTML = 'Loading image…'
+        _this.fetchImage(content)
+        content = img
+      } 
+      content_container.appendChild(content);
+    }
+
+    Modal.prototype.fetchImage = function(imageUrl) {
+      request = new XMLHttpRequest();
+      request.open('GET', imageUrl);
+
+      request.onload = function() {
+        if (request.status >= 200 && request.status < 400){
+          // Success!
+          debugger
+          return data = JSON.parse(request.responseText);
+        } else {
+          // We reached our target server, but it returned an error
+          console.error('There was a problem fetching your image. Check the URL?')
+        }
+      };
+
+      request.onerror = function() {
+        // There was a connection error of some sort
+        if (console) {
+          console.error('There was a problem fetching your image. Check the URL?')
+        }
+      };
+
+      request.send();
+    }
+
+    Modal.prototype.remove = function() {
+      _this.overlay.remove();
+      _this = null;
+    }
 
     return Modal;
 })();

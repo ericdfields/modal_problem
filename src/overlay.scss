@@ -1,3 +1,6 @@
+.e-overlay {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 .e-screen {
   position: fixed;
   top: 0;
@@ -10,4 +13,23 @@
   position: absolute;
   background: white;
   border-radius: 6px;
+}
+.e-modal-close {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  text-align: center;
+  font-weight: 600;
+  border-top: 1px solid #ccc;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  cursor: pointer;
+  &:before {
+    content: "Close";
+  }
+  &:hover {
+    color: #2052ff;
+  }
 }

@@ -1,3 +1,13 @@
-body {
-  background: blue;
+.e-screen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.5);
+}
+.e-modal {
+  position: absolute;
+  background: white;
+  border-radius: 6px;
 }

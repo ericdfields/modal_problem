@@ -7,44 +7,54 @@ var browserify = require('browserify');
 var sass = require('gulp-sass');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
-var bundler = watchify(browserify('./src/overlay.js', watchify.args));
+var bundler = watchify(browserify('./src/index.js', watchify.args));
 
-var srcPaths = {
+var paths = {
   scripts: 'src/**/*.js',
   styles: 'src/**/*.scss',
   markup: 'src/**/*.html'
 };
 
-var buildPath = 'build/'
+var dest = 'build/'
 
-gulp.task('scripts', bundle); // so you can run `gulp js` to build the file
-bundler.on('update', bundle); // on any dep update, runs the bundler
+// gulp.task('scripts', bundle); // so you can run `gulp js` to build the file
+// bundler.on('update', bundle); // on any dep update, runs the bundler
 
-function bundle() {
-  return bundler.bundle()
-    // log errors if they happen
-    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-    .pipe(source('overlay.js'))
-      .pipe(buffer())
-    .pipe(gulp.dest(buildPath));
-}
+// function bundle() {
+//   return bundler.bundle()
+//     // log errors if they happen
+//     .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+//     .pipe(source('index.js'))
+//       .pipe(buffer())
+//     .pipe(gulp.dest(dest));
+// }
 
 gulp.task('styles', function () {
-  gulp.src(srcPaths.styles)
+  gulp.src(paths.styles)
     .pipe(sass())
-    .pipe(gulp.dest(buildPath))
+    .pipe(gulp.dest(dest))
     .pipe(reload({ stream:true }));
 });
 
 gulp.task('markup', function() {
-  gulp.src(srcPaths.markup)
-    .pipe(gulp.dest(buildPath));
+  gulp.src(paths.markup)
+    .pipe(gulp.dest(dest));
 });
+
+gulp.task('scripts',function(){
+  gulp.src(paths.scripts)
+    .pipe(gulp.dest(dest))
+  browserify('./src/index.js')
+    .bundle()
+    .pipe(source('index.js'))
+    .pipe(gulp.dest(dest));
+})
 
 // Rerun the task when a file changes
 gulp.task('watch', function() {
-  gulp.watch(srcPaths.styles, ['styles']);
-  gulp.watch(srcPaths.markup, ['markup']);
+  gulp.watch(paths.styles, ['styles']);
+  gulp.watch(paths.markup, ['markup']);
+  gulp.watch(paths.scripts, ['scripts']);
 });
 
 // watch files for changes and reload

@@ -68,7 +68,7 @@ gulp.task('serve', function() {
   gulp.task('watch')
 });
 
-gulp.task('build', ['browserify', 'styles', 'markup']);
+gulp.task('build', ['scripts', 'styles', 'markup']);
 
 // The default task (called when you run `gulp` from cli)
 gulp.task('default', ['watch', 'scripts', 'styles', 'markup', 'serve']);

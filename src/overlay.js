@@ -139,6 +139,9 @@ var Modal = (function() {
   return Modal;
 })();
 
+var module = module || undefined
 if (module) {
   module.exports = Modal;
+} else {
+  window.Modal = Modal;
 }

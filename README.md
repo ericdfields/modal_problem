@@ -1,6 +1,6 @@
-# Modal Problem *Solutionized*
+# Modal
 
-First off, I'm sorry I called the main class it creates Modal and the primary files it generates named `overlay.*`. That was poor planning.
+First off, I'm sorry I called the main class it creates Modal and the primary files it generates named `overlay.*`.
 
 ## Usage
 
@@ -18,9 +18,36 @@ By default, this will give you a modal that is 50% the width of your browser win
 * **screenClickCloses** *(default: false)* — whether or not clicking on the "screen" behind the modal closes the modal
 * **contentClickCloses** *(default: false)* — whether or not clicking on the modal content itself closes the modal
 
-What browsers is your library compatible with? Why?
-What documentation, websites, papers, etc. did you consult in doing this exercise?
-What third-party libraries or other tools does your library use?
-How might you integrate your library idiomatically into an application built on your framework of choice (Ember, Angular, Backbone, React, etc.)? How would the library interface need to change to support this, if at all?
-How long did you spend on this exercise? If you had unlimited more time to spend on this, how would you spend it and how would you prioritize each item?
-If you were to critique your code, what would you have to say about it?
+## Compatability
+
+Modal was designed to be a vanilla-JS, drop-in anywhere plugin. To accomplish this with ease means supporting the latest browsers. Modal is functional on all modern browsers, IE10+.
+
+Modal depends on **zero** external libraries or plugins.
+
+Having spent a lot of time in CoffeeScript with jQuery, Underscore, and Backbone by my side, I went with a vanilla JS library for the challenge of it. I'm happy with how lean it is.
+
+# What documentation, websites, papers, etc. did you consult in doing this exercise?
+
+Getting a good lightweight dev environment setup was important to me. I spent more time than I should getting a decent gulp environment that also served my code up and running. Code for that borrowed from [here](https://github.com/gulpjs/gulp/tree/master/docs/recipes).
+
+# How might you integrate your library idiomatically into an application built on your framework of choice (Ember, Angular, Backbone, React, etc.)? How would the library interface need to change to support this, if at all?
+
+If this were a Backbone project, I would have simply extended the Backbone.View class and had some of the boilerplate code taken care of for me. It would have made for tighter code (less Modal.prototype.xyz).
+
+# How long did you spend on this exercise? If you had unlimited more time to spend on this, how would you spend it and how would you prioritize each item?
+
+4-5 hours.
+
+I hit a wall with loading an image via XMLHTTPRequest without using jQuery. jQuery seems to handle the CORS stuff for you, and I couldn't get around it, seemlingly without running a real server where I could set the Access-Control.
+
+If I had unlimited time I would make some enhancements that would improve the experience for end users first, then developers:
+
+* Throw in a baseline media query to have nicer styles for small screens out of the box.
+* Add some 'on' and 'off' classes along with some animation timing for nicer transitions.
+* Make better use of the custom class by interpolating additional class names on the elements for the sake of styling.
+
+And for developers, I would make sure this conforms to [UMD](https://github.com/umdjs/umd) for easy importing into one's environment.
+
+# If you were to critique your code, what would you have to say about it?
+
+While my code is knowingly sussinct, it's not unreadable. Some more inline comments would be helpful.

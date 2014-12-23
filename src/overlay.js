@@ -132,7 +132,7 @@ var Modal = (function() {
   }
 
   Modal.prototype.remove = function() {
-    _this.overlay.remove();
+    document.body.removeChild(_this.overlay);
     _this = null;
   }
 

@@ -75,6 +75,9 @@ var Modal = (function() {
     document.body.appendChild(overlay);
     _this.setLeft();
     _this.setTop();
+    setTimeout(function(){
+      _this.modal.classList.add('on');
+    },300);
   }
 
   Modal.prototype.getWidth = function() {

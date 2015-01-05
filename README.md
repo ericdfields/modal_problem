@@ -1,3 +1,9 @@
+## Setup
+
+````
+./build.sh
+````
+
 ## Usage
 
 For a basic modal, create a new Modal object with some content passed in:

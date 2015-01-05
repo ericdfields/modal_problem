@@ -1,8 +1,8 @@
 var Modal = require('./overlay')
 
-var el = document.createElement('div');
-el.innerHTML = "I'm a dom element. Put me in the modal.";
-// var el = 'http://www.guestcentric.com/wp-content/uploads/2012/02/url.jpg'
+// var el = document.createElement('div');
+// el.innerHTML = "I'm a dom element. Put me in the modal.";
+var el = 'http://www.guestcentric.com/wp-content/uploads/2012/02/url.jpg'
 
 var modal = window.modal = new Modal(el,{
   // 

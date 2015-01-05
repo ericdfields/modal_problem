@@ -94,41 +94,52 @@ var Modal = (function() {
   };
 
   Modal.prototype.appendContent = function(content) {
-    var content_container = _this.modal.querySelector('.e-modal-content');
-    content_container.innerHTML = '';
     if (typeof content == 'string') {
-      var img = document.createElement('div');
-      // img.src = content;
-      img.innerHTML = 'Loading image…'
-      _this.fetchImage(content)
-      content = img
-    } 
-    content_container.appendChild(content);
+      _this.appendLoader(_this.fetchImage.bind(null,content));
+    } else {
+      _this.contentContainer.appendChild(content);
+    }
+  }
+
+  Modal.prototype.contentContainer = function() {
+    return _this.modal.querySelector('.e-modal-content');
+  };
+
+  Modal.prototype.appendLoader = function(callback) {
+    var message = document.createElement('div');
+    message.className = 'e-modal-loader'
+    message.innerHTML = 'Loading image…'
+    _this.contentContainer().appendChild(message);
+    if (callback && typeof callback == 'function') {
+      callback();
+    }
+  };
+
+  Modal.prototype.removeLoader = function() {
+    var loader = _this.modal.querySelector('.e-modal-loader');
+    loader.parentNode.removeChild(loader);
   }
 
   Modal.prototype.fetchImage = function(imageUrl) {
-    request = new XMLHttpRequest();
-    request.open('GET', imageUrl);
-
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400){
-        // Success!
-        debugger
-        return data = JSON.parse(request.responseText);
+    var img = new Image(); 
+    img.src = imageUrl;
+    img.loading = true;
+    img.checked = 0;
+    _this.contentContainer().appendChild(img);
+    var intervalTimer = setInterval(function(){
+      if (img.loading) {
+        if (img.naturalWidth === 0) {
+          img.checked = img.checked++;
+        } else {
+          _this.removeLoader();
+          img.loading = false;
+          img.style.height = _this.getHeight() + 'px';
+          img.classList.add('loaded');
+        }
       } else {
-        // We reached our target server, but it returned an error
-        console.error('There was a problem fetching your image. Check the URL?')
+        clearInterval(intervalTimer);
       }
-    };
-
-    request.onerror = function() {
-      // There was a connection error of some sort
-      if (console) {
-        console.error('There was a problem fetching your image. Check the URL?')
-      }
-    };
-
-    request.send();
+    },100)
   }
 
   Modal.prototype.remove = function() {

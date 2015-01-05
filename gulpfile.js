@@ -5,6 +5,7 @@ var buffer = require('vinyl-buffer');
 var watchify = require('watchify');
 var browserify = require('browserify');
 var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var bundler = watchify(browserify('./src/index.js', watchify.args));
@@ -20,6 +21,10 @@ var dest = 'build/'
 gulp.task('styles', function () {
   gulp.src(paths.styles)
     .pipe(sass())
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
+    }))
     .pipe(gulp.dest(dest))
     .pipe(reload({ stream:true }));
 });

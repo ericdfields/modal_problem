@@ -13,6 +13,16 @@
   position: absolute;
   background: white;
   border-radius: 6px;
+  img {
+    max-height: 100%;
+    display: block;
+    margin: 0 auto;
+    opacity: 0;
+    transition: opacity .35s .25s;
+    &.loaded {
+      opacity: 1;
+    }
+  }
 }
 .e-modal-close {
   position: absolute;
@@ -26,10 +36,19 @@
   padding-top: .5em;
   padding-bottom: .5em;
   cursor: pointer;
+  background: rgba(255,255,255,.5);
   &:before {
     content: "Close";
   }
   &:hover {
     color: #2052ff;
   }
+}
+.e-modal-loader {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
 }

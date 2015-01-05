@@ -1,13 +1,15 @@
-# Modal
-
-First off, I'm sorry I called the main class it creates Modal and the primary files it generates named `overlay.*`.
-
 ## Usage
 
 For a basic modal, create a new Modal object with some content passed in:
 
 ````
     var modal = new Modal(dom_el, options)
+````
+
+For an image modal:
+
+````
+    var modal = new Modal('http://my_image.jpg', options)
 ````
 
 By default, this will give you a modal that is 50% the width of your browser window and 50% tall with a close button and some very basic styling. You can customize a few handy properties of your modal by passing in an options hash. Available options are:
@@ -38,10 +40,9 @@ If this were a Backbone project, I would have simply extended the Backbone.View 
 
 4-5 hours.
 
-I hit a wall with loading an image via XMLHTTPRequest without using jQuery. jQuery seems to handle the CORS stuff for you, and I couldn't get around it, seemlingly without running a real server where I could set the Access-Control.
-
 If I had unlimited time I would make some enhancements that would improve the experience for end users first, then developers:
 
+* Throw an exception for when a string is passed that isn't an image.
 * Throw in a baseline media query to have nicer styles for small screens out of the box.
 * Add some 'on' and 'off' classes along with some animation timing for nicer transitions.
 * Make better use of the custom class by interpolating additional class names on the elements for the sake of styling.
@@ -50,4 +51,4 @@ And for developers, I would make sure this conforms to [UMD](https://github.com/
 
 # If you were to critique your code, what would you have to say about it?
 
-While my code is knowingly sussinct, it's not unreadable. Some more inline comments would be helpful.
+While my code is knowingly sussinct, it's not unreadable. Some JSdoc-style comments would help us understand what's going on.
